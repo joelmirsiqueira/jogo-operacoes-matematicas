@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completando as palavras e operações matemáticas</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/index.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="titulo">
+            <h1>Completando as operações matemáticas</h1>
+        </div>
+    </header>
+    <div class="container">
+        <div class="topo">
+            <div class="pontos">
+                <h3>Recorde:
+                    <span id="recorde">0</span> >>
+                    <span id="jogador">Jogador</span>
+                </h3>
+            </div>
+        </div>
+        <main>
+            <div id="inicio" class="inicio">
+                <button type="button" id="bt-iniciar">Iníciar</button>
+            </div>
+            <div id="nivel" class="nivel oculto">
+                <h2>Nível:</h2>
+                <button class="opcao-nivel" id="facil">Fácil</button>
+                <button class="opcao-nivel" id="medio">Médio</button>
+                <button class="opcao-nivel" id="dificil">Difícil</button>
+            </div>
+            <div id="jogadores" class="jogadores oculto">
+                <h2>Número de jogadores:</h2>
+                <button class="opcao-jogadores">1 jogador</button>
+                <button class="opcao-jogadores">2 jogadores</button>
+                <button class="opcao-jogadores">3 jogadores</button>
+                <button class="opcao-jogadores">4 jogadores</button>
+            </div>
+            <div id="area-nome" class="area-nome oculto">
+                <h2>Jogador <span id="iterador"></span>:</h2>
+                <button class="campo-nome">
+                    <input type="text" name="nome" id="nome" placeholder="Digite seu nome">
+                    <p id="bt-ok">></p>
+                </button>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

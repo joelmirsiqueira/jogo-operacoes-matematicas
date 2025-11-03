@@ -1,0 +1,67 @@
+h2 {
+    color: black;
+    font-size: 25pt;
+    text-align: center;
+    padding: 30px;
+}
+
+.nivel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center
+}
+
+.jogadores {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.area-nome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.campo-nome {
+    display: flex;
+    width: 340px;
+}
+
+.campo-nome:hover {
+    cursor: alias;
+}
+
+#nome {
+    width: 245px;;
+    border: none;
+    padding: 10px;
+    border-right: 1px solid #e3e999;
+    border-radius: 10px 0 0 10px;
+    font-size:20pt;
+    
+}
+
+#bt-ok {
+    display: flex;
+    align-items: center;
+    justify-content: center;;
+    width: 50px;
+    height: 45px;
+    border-radius: 0 10px 10px 0;
+    padding: 5px;
+    background-color: #ffffff;
+    font-size: 15pt;
+    margin-bottom: 0;
+}
+
+#bt-ok:hover {
+    cursor: pointer;
+}
+
+.oculto {
+    display: none;
+}

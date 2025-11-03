@@ -1,0 +1,75 @@
+.vidas {
+    padding: 0 30px;
+}
+
+.nome {
+    background-color: aliceblue;
+    border-radius: 50px;
+    color: black;
+    font-size: 18pt;
+    font-style: italic;
+    padding: 10px 30px;
+}
+
+.tempo {
+    flex-shrink: 0;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    margin: 30px;
+    color: black;
+    font-size: 20pt;
+    font-style: italic;
+    background-color: #e3e999;
+}
+
+.pergunta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    color: black;
+    font-size: 28pt;
+    background-color: aliceblue;
+    width: 500px;
+    height: 175px;
+}
+
+.opcoes {
+    
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+}
+
+.opcao {
+    margin-top: 50px;
+    padding: 10px 25px;
+    font-size: 28pt;
+    color: black;
+    background-color: #e3e999;
+    border-radius: 20px
+}
+
+.opcao:hover {
+    cursor: alias;
+}
+
+#resposta {
+    padding: 8px 25px;
+    border-radius: 20px;
+    background-color: #e3e999;
+}
+
+.resultado {
+    margin-top: 50px;
+    font-size: 20pt;
+    font-style: italic;
+}
+
+.oculto {
+    display: none;
+}

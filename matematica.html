@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Completando as Operações Matemáticas</title>
+        <link rel="stylesheet" href="./css/style.css">
+        <link rel="stylesheet" href="./css/matematica.css">
+        <script src="./js/banco-questoes.js"></script>
+        <script src="./js/matematica.js"></script>
+</head>
+<body>
+    <header>
+        <div class="titulo">
+            <h1>Completando as Operações Matemáticas</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="topo">
+            <div class="pontos">
+                <h3>Pontos: <span id="pontos"></span></h3>
+            </div>
+            <div class="vidas">
+                <h3>Vidas: <span id="vidas"></span></h3>
+            </div>
+        </div>
+        <main>
+            <div class="nome">
+                <h2><span id="nome-jogador"></span></h2>
+            </div> 
+            <div class="tempo oculto">
+                <h2><span id="tempo"></span></h2>
+            </div>
+            <div class="pergunta oculto">
+                <h2>
+                    <span id="numero"></span> 
+                    <span id="operacao"></span> 
+                    <span id="resposta"></span>
+                    = 
+                    <span id="resultado"></span></h2>
+                </div>
+                <div class="opcoes oculto">
+                    <div class="opcao">
+                        <h2></h2>
+                    </div>
+                    <div class="opcao">
+                        <h2></h2>
+                    </div>
+                    <div class="opcao">
+                        <h2></h2>
+                    </div>
+                    <div class="opcao">
+                        <h2></h2>
+                    </div>
+                </div>
+                <div class="resultado oculto">
+                    <h2><span id="mensagem"></span></h2>
+                </div>
+                <button id="bt-comecar">Começar</button>
+            </main>
+            <button id="bt-sair">Sair</button>
+        </div>
+</body>
+</html>
