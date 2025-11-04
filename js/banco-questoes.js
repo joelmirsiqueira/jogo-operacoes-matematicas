@@ -105,10 +105,10 @@ function questaoDivisao() {
     const minFator = 2;
     const maxFator = 12;
 
-    const resposta = Math.floor(Math.random() * (maxFator - minFator + 1) + minFator); // Divisor
-    const resultado = Math.floor(Math.random() * (maxFator - minFator + 1) + minFator); // Quociente
+    const resposta = Math.floor(Math.random() * (maxFator - minFator + 1) + minFator);
+    const resultado = Math.floor(Math.random() * (maxFator - minFator + 1) + minFator);
 
-    const numero = resposta * resultado; // Dividendo
+    const numero = resposta * resultado;
 
     const opcoesSet = new Set();
     opcoesSet.add(resposta);
