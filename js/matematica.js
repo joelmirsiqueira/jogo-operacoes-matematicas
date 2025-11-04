@@ -9,16 +9,18 @@ const resultados = [];
 let listaGeradores = [];
 let jogadorAtual;
 let questaoAtual;
+let contadorId;
+const duracao = 60;
 
 
 window.addEventListener('load', main)
 
 function main() {
     criarJogadores();
-    estabelecerDificuldade();
-    proximoJogador();
     habilitarOpcoes();
+    habilitarComecar();
     sair();
+    proximoJogador();
 }
 
 function criarJogadores() {
@@ -35,16 +37,46 @@ function criarJogadores() {
 }
 
 function estabelecerDificuldade() {
-    if (nivel === 'facil') {
+    if (nivel === 'Fácil') {
         listaGeradores = [questaoSoma];
-    } else if (nivel === 'medio') {
+    } else if (nivel === 'Médio') {
         listaGeradores = [questaoSoma, questaoSubtracao];
     } else {
         listaGeradores = [questaoSoma, questaoSubtracao, questaoMultiplicacao, questaoDivisao];
     }
 }
 
+function habilitarOpcoes() {
+    const opcoes = document.getElementsByClassName('opcao');
+    const resposta = document.getElementById('resposta');
+    Array.from(opcoes).forEach(opcao => {
+        opcao.addEventListener('mouseover', () => {
+            resposta.textContent = opcao.textContent;
+            opcao.style.backgroundColor = '#006cf8ff';
+        })
+        opcao.addEventListener('mouseleave', () => {
+            resposta.textContent = '?';
+            opcao.style.backgroundColor = '#e3e999';
+        })
+        opcao.addEventListener('click', () => {
+            verificarResposta(+opcao.textContent);
+        })
+    })
+}
+
+function habilitarComecar() {
+    const btComecar = document.getElementById('bt-comecar');
+    btComecar.addEventListener('click', () => {
+        btComecar.hidden = true;
+        configuraExibicao('flex');
+        iniciar();
+    })
+}
+
 function proximoJogador() {
+    estabelecerDificuldade();
+    const btComecar = document.getElementById('bt-comecar');
+    resetarContador();
     if (jogadorAtual === undefined) {
         jogadorAtual = listaJogadores.shift();
     } else {
@@ -60,17 +92,17 @@ function proximoJogador() {
     }
     configuraExibicao('none');
     atualizarJogador();
-    comecar();
+    btComecar.hidden = false;
+}
+
+function resetarContador() {
+    clearInterval(contadorId);
+    contadorId = undefined;
+    const tempo = document.getElementById('tempo');
+    tempo.textContent = duracao;
 }
 
 function comecar() {
-    const btComecar = document.getElementById('bt-comecar');
-    btComecar.hidden = false;
-    btComecar.addEventListener('click', () => {
-        btComecar.hidden = true;
-        configuraExibicao('flex');
-        iniciar();
-    })
 }
 
 function configuraExibicao(display) {
@@ -78,12 +110,19 @@ function configuraExibicao(display) {
     campos.forEach(campo => {
         document.getElementsByClassName(campo)[0].style.display = display;
     })
-
 }
 
 function iniciar() {
     GerarQuestao();
-    contador();
+    contadorId = setInterval(() => {
+        tempo.textContent = +tempo.textContent - 1;
+        if (+tempo.textContent < 1) {
+            atualizarMensagem('Seu tempo acabou!', 'blue');
+        }
+        if (+tempo.textContent < 0) {
+            proximoJogador();
+        }
+    }, 1000);
 }
 
 function atualizarJogador() {
@@ -123,24 +162,6 @@ function proximaQuestao() {
     return atual();
 }
 
-function habilitarOpcoes() {
-    const opcoes = document.getElementsByClassName('opcao');
-    const resposta = document.getElementById('resposta');
-    Array.from(opcoes).forEach(opcao => {
-        opcao.addEventListener('mouseover', () => {
-            resposta.textContent = opcao.textContent;
-            opcao.style.backgroundColor = '#006cf8ff';
-        })
-        opcao.addEventListener('mouseleave', () => {
-            resposta.textContent = '?';
-            opcao.style.backgroundColor = '#e3e999';
-        })
-        opcao.addEventListener('click', () => {
-            verificarResposta(+opcao.textContent);
-        })
-    })
-}
-
 function verificarResposta(opcao) {
     const opcoes = document.getElementsByClassName('opcao');
     const respostaCorreta = questaoAtual.resposta;
@@ -162,20 +183,6 @@ function verificarResposta(opcao) {
     })
     setTimeout(() => {
         GerarQuestao();
-    }, 2000);
-}
-
-function contador() {
-    const tempo = document.getElementById('tempo');
-    tempo.textContent = 60;
-    setInterval(() => {
-        tempo.textContent = +tempo.textContent - 1;
-        if (+tempo.textContent < 1) {
-            atualizarMensagem('Seu tempo acabou!', 'blue');
-        }
-        if (+tempo.textContent < 0) {
-            proximoJogador();
-        }
     }, 1000);
 }
 

@@ -5,6 +5,10 @@ h2 {
     padding: 30px;
 }
 
+#recorde-nivel {
+    font-style: italic;
+}
+
 .nivel {
     display: flex;
     flex-direction: column;
