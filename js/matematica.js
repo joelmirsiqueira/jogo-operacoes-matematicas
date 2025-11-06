@@ -102,9 +102,6 @@ function resetarContador() {
     tempo.textContent = duracao;
 }
 
-function comecar() {
-}
-
 function configuraExibicao(display) {
     const campos = ['tempo', 'pergunta', 'opcoes', 'resultado']
     campos.forEach(campo => {

@@ -16,6 +16,11 @@ h2 {
     justify-content: center
 }
 
+img {
+    margin-top: 100px;
+    width: 500px;
+}
+
 .jogadores {
     display: flex;
     flex-direction: column;

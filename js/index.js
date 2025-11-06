@@ -4,6 +4,7 @@ function main() {
     carregarRecorde();
     iniciar();
     nivel();
+    CampoNome();
     jogadores();
 }
 
@@ -60,8 +61,10 @@ function iniciar() {
     sessionStorage.removeItem('nomes');
     const btIniciar = document.getElementById('bt-iniciar');
     const nivel = document.getElementById('nivel');
+    const ilustracao = document.getElementById('ilustracao');
     btIniciar.addEventListener('click', () => {
         btIniciar.style.display = 'none';
+        ilustracao.style.display = 'none';
         nivel.style.display = 'flex';
     });
 }
@@ -98,8 +101,8 @@ function capturarNome(quantidade) {
     const btOk = document.getElementById('bt-ok');
     iterador.textContent = 1;
     areaNome.style.display = 'flex';
-    const nomes = [];
     nome.focus();
+    const nomes = [];
     btOk.addEventListener('click', () => {
         nomes.push(nome.value);
         if (nomes.length === quantidade) {
@@ -110,5 +113,16 @@ function capturarNome(quantidade) {
         iterador.textContent = +iterador.textContent + 1;
         nome.value = '';
         nome.focus();
+    });
+}
+
+function CampoNome() {
+    const nome = document.getElementById('nome');
+    const btOk = document.getElementById('bt-ok');
+    nome.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            btOk.click();
+        }
     });
 }
