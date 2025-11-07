@@ -5,6 +5,15 @@ h2 {
     padding: 30px;
 }
 
+.topo {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    padding-left: 2%;
+    width: 98%;
+}
+
 #recorde-nivel {
     font-style: italic;
 }

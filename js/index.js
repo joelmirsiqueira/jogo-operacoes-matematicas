@@ -1,64 +1,51 @@
 window.addEventListener('load', main)
+let quantidade;
+const nomes = [];
 
 function main() {
-    carregarRecorde();
-    iniciar();
-    nivel();
-    CampoNome();
-    jogadores();
+    const recordes = carregarRecordes();
+    exibirRecordes(recordes);
+    ativarBtIniciar();
+    ativarBtsNivel();
+    ativarBtsjogadores();
+    ativarSalvaNome();
+    ativarSalvaNomeEnter();
 }
 
-function carregarRecorde() {
-    const recordes = localStorage.getItem('recordes');
-    let recordesObj;
+function carregarRecordes() {
+    let recordes = localStorage.getItem('recordes');
     if (recordes) {
-        recordesObj = JSON.parse(recordes);
+        return JSON.parse(recordes);
     } else {
-        recordesObj = gerarRecordesVazios();
+        recordes = {
+            Fácil: 'Sem recorde',
+            Médio: 'Sem recorde',
+            Difícil: 'Sem recorde'
+        };
+        localStorage.setItem('recordes', JSON.stringify(recordes));
+        return recordes;
     }
-    arrayRecordes = Object.entries(recordesObj);
-    lacoRecordes(arrayRecordes);
 }
 
-function lacoRecordes(array) {
-    const item = array.shift();
-    array.push(item);
-    exibirRecorde(item[0], item[1]);
-    setTimeout(() => {
-        lacoRecordes(array);
+function preencherRecorde(listaRecordes) {
+    const recordeNivel = document.getElementById('recorde-nivel');
+    const recordeConteudo = document.getElementById('recorde-conteudo');
+    const recordeAtual = listaRecordes.shift();
+    listaRecordes.push(recordeAtual);
+    recordeNivel.textContent = recordeAtual[0];
+    recordeConteudo.textContent = recordeAtual[1];
+}
+
+function exibirRecordes(recordes) {
+    const listaRecordes = Object.entries(recordes);
+    preencherRecorde(listaRecordes);
+    setInterval(() => {
+        preencherRecorde(listaRecordes);
     }, 3000);
 }
 
-function gerarRecordesVazios() {
-    const recordesVazios = {
-        Fácil: {
-            nome: '',
-            pontos: 0
-        },
-        Médio: {
-            nome: '',
-            pontos: 0
-        },
-        Difícil: {
-            nome: '',
-            pontos: 0
-        }
-    }
-    return recordesVazios;
-}
-
-function exibirRecorde(nivel, item) {
-    const nivelElement = document.getElementById('recorde-nivel');
-    const nome = document.getElementById('recorde-nome');
-    const pontos = document.getElementById('recorde-pontos');
-    nivelElement.textContent = nivel;
-    nome.textContent = item.nome;
-    pontos.textContent = item.pontos;
-}
-
-function iniciar() {
-    sessionStorage.removeItem('nivel');
-    sessionStorage.removeItem('nomes');
+function ativarBtIniciar() {
+    sessionStorage.clear()
     const btIniciar = document.getElementById('bt-iniciar');
     const nivel = document.getElementById('nivel');
     const ilustracao = document.getElementById('ilustracao');
@@ -69,7 +56,7 @@ function iniciar() {
     });
 }
 
-function nivel() {
+function ativarBtsNivel() {
     const nivel = document.getElementById('nivel');
     const opcoes = document.getElementsByClassName('opcao-nivel');
     const jogadores = document.getElementById('jogadores');
@@ -82,27 +69,27 @@ function nivel() {
     });
 }
 
-function jogadores() {
+function ativarBtsjogadores() {
     const jogadores = document.getElementById('jogadores');
     const opcoes = document.getElementsByClassName('opcao-jogadores');
+    const areaNome = document.getElementById('area-nome');
+    const nome = document.getElementById('nome');
     Array.from(opcoes).forEach(opcao => {
         opcao.addEventListener('click', () => {
             jogadores.style.display = 'none';
-            const quantidade = opcao.textContent.split(' ')[0];
-            capturarNome(+quantidade);
+            quantidade = +opcao.textContent.split(' ')[0];
+            areaNome.style.display = 'flex';
+            nome.focus();
         });
     });
 }
 
-function capturarNome(quantidade) {
+function ativarSalvaNome() {
     const areaNome = document.getElementById('area-nome');
-    const iterador = document.getElementById('iterador');
     const nome = document.getElementById('nome');
     const btOk = document.getElementById('bt-ok');
+    const iterador = document.getElementById('iterador');
     iterador.textContent = 1;
-    areaNome.style.display = 'flex';
-    nome.focus();
-    const nomes = [];
     btOk.addEventListener('click', () => {
         nomes.push(nome.value);
         if (nomes.length === quantidade) {
@@ -116,7 +103,7 @@ function capturarNome(quantidade) {
     });
 }
 
-function CampoNome() {
+function ativarSalvaNomeEnter() {
     const nome = document.getElementById('nome');
     const btOk = document.getElementById('bt-ok');
     nome.addEventListener('keypress', (event) => {

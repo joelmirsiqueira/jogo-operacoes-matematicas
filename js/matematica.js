@@ -10,7 +10,7 @@ let listaGeradores = [];
 let jogadorAtual;
 let questaoAtual;
 let contadorId;
-const duracao = 60;
+const duracao = 30;
 
 
 window.addEventListener('load', main)
@@ -52,10 +52,12 @@ function habilitarOpcoes() {
     Array.from(opcoes).forEach(opcao => {
         opcao.addEventListener('mouseover', () => {
             resposta.textContent = opcao.textContent;
+            resposta.style.color = 'blue';
             opcao.style.backgroundColor = '#006cf8ff';
         })
         opcao.addEventListener('mouseleave', () => {
             resposta.textContent = '?';
+            resposta.style.color = 'black';
             opcao.style.backgroundColor = '#e3e999';
         })
         opcao.addEventListener('click', () => {
@@ -149,7 +151,7 @@ function GerarQuestao() {
         opcao.textContent = questao.opcoes.pop();
         opcao.style.backgroundColor = '#e3e999';
     })
-    atualizarMensagem('?', 'black');
+    atualizarMensagem('', 'black');
     questaoAtual = questao;
 }
 
