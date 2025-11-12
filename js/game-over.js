@@ -1,43 +1,26 @@
-const nivel = sessionStorage.getItem('nivel');
-const resultados = sessionStorage.getItem('resultados');
-if (!nivel || !resultados) {
-    window.location.href = 'index.html';
-}
-const listaResultados = JSON.parse(resultados);
-let vencedor;
-
-
 window.addEventListener('load', main)
 
-
 function main() {
-    processarResultados();
-    atualizarRecordes();
+    const { nivel, resultadosLista } = carregarResultados();
+    const { vencedor, mensagem } = determinarVencedor(resultadosLista);
+    atualizarMensagem(mensagem);
+    exibirResultados(resultadosLista);
+    atualizarRecordes(nivel, resultadosLista);
     voltar();
 }
 
-function processarResultados() {
-    if (listaResultados.length === 1) {
-        atualizarMensagem('game over');
-    } else {
-        listaResultados.sort((a, b) => b.pontos - a.pontos)
-        if (listaResultados[0].pontos === listaResultados[1].pontos) {
-            atualizarMensagem('empate');
-        } else {
-            vencedor = listaResultados[0];
-            atualizarMensagem(`${vencedor.nome} venceu!`);
-        }
+function carregarResultados() {
+    const nivel = sessionStorage.getItem('nivel');
+    const resultadosSession = sessionStorage.getItem('resultados');
+    if (!nivel || !resultadosSession) {
+        window.location.href = 'index.html';
+        return;
     }
-    exibirResultados();
-}
-
-function exibirResultados() {
-    const lista = document.getElementById('lista-result');
-    listaResultados.forEach(resultado => {
-        const item = document.createElement('li');
-        item.textContent = `${resultado.nome} => ${resultado.pontos}`;
-        lista.appendChild(item);
-    });
+    const resultadosLista = JSON.parse(resultadosSession);    
+    return {
+        nivel: nivel,
+        resultadosLista: resultadosLista
+    }
 }
 
 function atualizarMensagem(texto) {
@@ -45,45 +28,53 @@ function atualizarMensagem(texto) {
     mensagem.textContent = texto.toUpperCase();
 }
 
-function atualizarRecordes() {
-    const recordesAtuais = localStorage.getItem('recordes');
-    const nivel = sessionStorage.getItem('nivel');
-    const maiorPontuacao = listaResultados[0];
-    let recordes;
-    if (listaResultados.length > 1 && !vencedor) {
-        maiorPontuacao.nome = '';
-    }
-    if (recordesAtuais === null) {
-        const recordesNovos = {
-            Fácil: {},
-            Médio: {},
-            Difícil: {}
-        }
-        for (const item in recordesNovos) {
-            recordesNovos[item] = {
-                nome: '',
-                pontos: 0
-            }
-        }
-        recordesNovos[nivel] = maiorPontuacao;
-        recordes = recordesNovos;
+function determinarVencedor(resultadosLista) {
+    let vencedor;
+    let mensagem;
+    if (resultadosLista.length === 1) {
+        mensagem = 'game over';
     } else {
-        recordes = JSON.parse(recordesAtuais);
-        if (maiorPontuacao.pontos > recordes[nivel].pontos) {
-            recordes[nivel] = maiorPontuacao;
+        resultadosLista.sort((a, b) => b.pontos - a.pontos)
+        if (resultadosLista[0].pontos === resultadosLista[1].pontos) {
+            mensagem = 'empate';
+        } else {
+            vencedor = resultadosLista[0];
+            mensagem = `${vencedor.nome} venceu!`;
         }
     }
-    localStorage.setItem('recordes', JSON.stringify(recordes));
-    exibirRecordes(recordes[nivel]);
+    return {
+        vencedor: vencedor,
+        mensagem: mensagem
+    }
 }
 
-function exibirRecordes(item) {
-    const nivelElement = document.getElementById('nivel');
-    const nome = document.getElementById('nome');
-    const pontos = document.getElementById('pontos');
-    nivelElement.textContent = nivel.at(0).toUpperCase() + nivel.slice(1);
-    nome.textContent = item.nome;
-    pontos.textContent = item.pontos;
+function exibirResultados(listaResultados) {
+    listaResultados.forEach(resultado => {
+        const lista = document.getElementById('lista-result');
+        const item = document.createElement('li');
+        item.textContent = `${resultado.nome} - ${resultado.pontos} pontos`;
+        lista.appendChild(item);
+    });
+}
+
+function exibirRecorde(nivel, recorde) {
+    const recordeNivel = document.getElementById('recorde-nivel');
+    const recordeConteudo = document.getElementById('recorde-conteudo');
+    recordeNivel.textContent = nivel;    
+    recordeConteudo.textContent = `${recorde.nome} - ${recorde.pontos} pontos`;
+}
+
+function atualizarRecordes(nivel, resultadosLista) {
+    const recordes = JSON.parse(localStorage.getItem('recordes'));
+    const maiorPontuacao = resultadosLista[0];
+    if (resultadosLista.length > 1 && !vencedor) {
+        maiorPontuacao.nome = '';
+    }
+    if (maiorPontuacao.pontos > recordes[nivel].pontos) {
+        recordes[nivel] = maiorPontuacao;
+    }
+    localStorage.setItem('recordes', JSON.stringify(recordes));
+    exibirRecorde(nivel, recordes[nivel]);
 }
 
 function voltar() {
