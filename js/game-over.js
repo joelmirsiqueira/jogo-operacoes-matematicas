@@ -5,7 +5,7 @@ function main() {
     const { vencedor, mensagem } = determinarVencedor(resultadosLista);
     atualizarMensagem(mensagem);
     exibirResultados(resultadosLista);
-    atualizarRecordes(nivel, resultadosLista);
+    atualizarRecordes(nivel, resultadosLista, vencedor);
     voltar();
 }
 
@@ -64,7 +64,7 @@ function exibirRecorde(nivel, recorde) {
     recordeConteudo.textContent = `${recorde.nome} - ${recorde.pontos} pontos`;
 }
 
-function atualizarRecordes(nivel, resultadosLista) {
+function atualizarRecordes(nivel, resultadosLista, vencedor) {
     const recordes = JSON.parse(localStorage.getItem('recordes'));
     const maiorPontuacao = resultadosLista[0];
     if (resultadosLista.length > 1 && !vencedor) {

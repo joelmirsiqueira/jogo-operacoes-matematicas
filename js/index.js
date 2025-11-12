@@ -3,7 +3,7 @@ let quantidade;
 const nomes = [];
 
 function main() {
-    const recordes = carregarRecordes();
+    const recordes = carregarRecordes();    
     exibirRecordes(recordes);
     ativarBtIniciar();
     ativarBtsNivel();
@@ -17,10 +17,14 @@ function carregarRecordes() {
     if (recordes) {
         return JSON.parse(recordes);
     } else {
+        const semRecorde = {
+            nome: 'Sem recorde',
+            pontos: 0
+        }
         recordes = {
-            Fácil: 'Sem recorde',
-            Médio: 'Sem recorde',
-            Difícil: 'Sem recorde'
+            Fácil: semRecorde,
+            Médio: semRecorde,
+            Difícil: semRecorde
         };
         localStorage.setItem('recordes', JSON.stringify(recordes));
         return recordes;
@@ -33,7 +37,7 @@ function preencherRecorde(listaRecordes) {
     const recordeAtual = listaRecordes.shift();
     listaRecordes.push(recordeAtual);
     recordeNivel.textContent = recordeAtual[0];
-    recordeConteudo.textContent = recordeAtual[1];
+    recordeConteudo.textContent = `${recordeAtual[1].nome} - ${recordeAtual[1].pontos} pontos`;
 }
 
 function exibirRecordes(recordes) {
